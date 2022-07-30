@@ -1,8 +1,16 @@
 // import React from 'react'
 
 import { useAddress, useDisconnect, useMetamask } from '@thirdweb-dev/react';
+import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import { sanityClient, uriFor } from '../../sanity';
+import { Collection } from '../../typings';
 
-const NFTDropPage = () => {
+interface Props {
+	collection: Collection;
+}
+
+const NFTDropPage = ({ collection }: Props) => {
 	// Auth
 	const connectWithMetamask = useMetamask();
 	const address = useAddress();
@@ -16,14 +24,16 @@ const NFTDropPage = () => {
 					<div className='rounded-xl p-2 bg-gradient-to-br from-orange-300 to-purple-400'>
 						<img
 							className='w-44 rounded-xl object-cover lg:h-96 lg:w-72'
-							src='https://cdn.sanity.io/images/9ep8u6nk/production/ee298e2fb78803f3226dcde22f1f2a8d69f56fad-600x600.png'
+							src={uriFor(collection.mainImage).url()}
 							alt=''
 						/>
 					</div>
 					<div className='text-center p-5 space-y-2'>
-						<h1 className='text-4xl font-bold text-white'>Bored Apes</h1>
+						<h1 className='text-4xl font-bold text-white'>
+							{collection.title}
+						</h1>
 						<h2 className='text-xl text-gray-200'>
-							A collection of Bored&apos;s Apes who lives & breathe React!
+							A {collection.title} who lives & breathe React!
 						</h2>
 					</div>
 				</div>
@@ -32,13 +42,15 @@ const NFTDropPage = () => {
 			<div className='flex flex-1 flex-col p-12 lg:col-span-6'>
 				{/* Header */}
 				<header className='flex items-center justify-between'>
-					<h1 className='w-52 cursor-pointer text-xl font-extralight sm:w-80 '>
-						My{' '}
-						<span className='font-extrabold underline decoration-pink-600/50'>
-							Own
-						</span>{' '}
-						Market Place NFT
-					</h1>
+					<Link href={'/'}>
+						<h1 className='w-52 cursor-pointer text-xl font-extralight sm:w-80 '>
+							My{' '}
+							<span className='font-extrabold underline decoration-pink-600/50'>
+								Own
+							</span>{' '}
+							Market Place NFT
+						</h1>
+					</Link>
 					<button
 						onClick={() => (address ? disconnect() : connectWithMetamask())}
 						className='rounded-full bg-cyan-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base shadow-md'
@@ -60,11 +72,11 @@ const NFTDropPage = () => {
 				<div className='mt-10 flex flex-1 flex-col items-center space-y-6 text-center lg:justify-center lg:space-y-0'>
 					<img
 						className='w-80 object-cover pb-10 lg:h-48'
-						src='https://cdn.sanity.io/images/9ep8u6nk/production/f72570921cab407c11a39c8e1717f5607718e14d-2951x2430.webp'
+						src={uriFor(collection.previewImage).url()}
 						alt=''
 					/>
 					<h1 className='text-3xl font-bold lg:text-5xl lg:font-extrabold'>
-						The Apes Coding Club | NFT Drop
+						{collection.title} | NFT Drop
 					</h1>
 
 					<p className='pt-2 text-xl text-green-500'>
@@ -81,3 +93,46 @@ const NFTDropPage = () => {
 };
 
 export default NFTDropPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+	const query = `*[_type == 'collection' && slug.current == $id][0]{
+		_id,
+		title,
+		address,
+		description,
+		nftCollectionName,
+		mainImage{
+		  asset
+		},
+		previewImage{
+		  asset
+		},
+		slug{
+		  current
+		},
+		creator->{
+		  _id,
+		  name,
+		  address,
+		  slug {
+			current
+		  },
+		},
+	  }`;
+
+	const collection = await sanityClient.fetch(query, {
+		id: params?.id,
+	});
+
+	if (!collection) {
+		return {
+			notFound: true,
+		};
+	}
+
+	return {
+		props: {
+			collection,
+		},
+	};
+};

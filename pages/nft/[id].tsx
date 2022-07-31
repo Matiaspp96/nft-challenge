@@ -95,7 +95,7 @@ const NFTDropPage = ({ collection }: Props) => {
 						padding: '20px',
 					},
 				});
-
+				console.log(receipt)
 				setTx(claimedTokendId);
 				setNftMinted(claimedNFT.metadata);
 			})
@@ -120,6 +120,10 @@ const NFTDropPage = ({ collection }: Props) => {
 
 	return (
 		<div className='flex h-screen flex-col lg:grid lg:grid-cols-10'>
+			<Head>
+				<title>NFT Drops</title>
+				<link rel='icon' href='/favicon.ico' />
+			</Head>
 			{/* Toaster */}
 			<Toaster position='bottom-center' />
 			{/* Modal */}
@@ -139,7 +143,7 @@ const NFTDropPage = ({ collection }: Props) => {
 									X
 								</button>
 							</div>
-							<div className='p-6 space-y-6'>
+							<div className='flex flex-col items-center p-6 space-y-6'>
 								<img
 									className='w-44 rounded-xl object-cover lg:h-auto lg:w-72'
 									src={nftMinted.image}

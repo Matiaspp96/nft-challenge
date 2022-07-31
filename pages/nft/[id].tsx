@@ -8,6 +8,7 @@ import {
 } from '@thirdweb-dev/react';
 import { BigNumber } from 'ethers';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { sanityClient, uriFor } from '../../sanity';

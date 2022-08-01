@@ -25,7 +25,7 @@ const NFTDropPage = ({ collection }: Props) => {
 	const [price, setPrice] = useState<string>();
 	const nftDrop = useNFTDrop(collection.address);
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [tx, setTx] = useState<BigNumber>();
+	const [tx, setTx] = useState<string>();
 	const [nftMinted, setNftMinted] = useState<any>();
 
 	// Auth
@@ -96,7 +96,7 @@ const NFTDropPage = ({ collection }: Props) => {
 					},
 				});
 
-				setTx(claimedTokendId);
+				setTx(receipt.blockHash);
 				setNftMinted(claimedNFT.metadata);
 			})
 			.catch(err => {
@@ -148,9 +148,12 @@ const NFTDropPage = ({ collection }: Props) => {
 								<p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
 									{nftMinted.name} | {nftMinted.description}
 								</p>
-								<Link href={`https://rinkeby.etherscan.io/tx/${tx?._hex}`}>
+								<Link
+									href={`https://rinkeby.etherscan.io/tx/${tx}`}
+									target={'_blank'}
+								>
 									<p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
-										Transaction ID: {tx?._hex}
+										Transaction ID: {tx}
 									</p>
 								</Link>
 							</div>
@@ -193,7 +196,7 @@ const NFTDropPage = ({ collection }: Props) => {
 				<header className='flex items-center justify-between'>
 					<Link href={'/'}>
 						<h1 className='w-52 cursor-pointer text-xl font-extralight sm:w-80 '>
-							My{' '}
+							{'<'} My{' '}
 							<span className='font-extrabold underline decoration-pink-600/50'>
 								Own
 							</span>{' '}

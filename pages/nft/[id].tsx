@@ -96,8 +96,8 @@ const NFTDropPage = ({ collection }: Props) => {
 						padding: '20px',
 					},
 				});
-				console.log(receipt);
-				setTx(receipt.blockHash);
+
+				setTx(receipt.transactionHash);
 				setNftMinted(claimedNFT.metadata);
 			})
 			.catch(err => {

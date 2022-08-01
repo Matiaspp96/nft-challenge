@@ -72,7 +72,7 @@ const NFTDropPage = ({ collection }: Props) => {
 		const notification = toast.loading('Minting ...', {
 			style: {
 				background: 'white',
-				color: 'rgb(34 197 94, 0.5)',
+				color: 'green',
 				fontWeight: 'bolder',
 				fontSize: '17px',
 				padding: '17px',
@@ -86,11 +86,9 @@ const NFTDropPage = ({ collection }: Props) => {
 				const claimedTokendId = tx[0].id;
 				const claimedNFT = await tx[0].data();
 
-				toast('Hooray... You Successfully Minted!', {
-					duration: 8000,
+				toast.success('Hooray... You Successfully Minted!', {
+					duration: 4000,
 					style: {
-						background: 'rgb(34 197 94, 0.5)',
-						color: 'white',
 						fontWeight: 'bolder',
 						fontSize: '17px',
 						padding: '17px',

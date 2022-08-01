@@ -96,7 +96,7 @@ const NFTDropPage = ({ collection }: Props) => {
 						padding: '20px',
 					},
 				});
-
+				console.log(receipt);
 				setTx(receipt.blockHash);
 				setNftMinted(claimedNFT.metadata);
 			})
@@ -158,7 +158,7 @@ const NFTDropPage = ({ collection }: Props) => {
 									target={'_blank'}
 								>
 									<p className='text-base leading-relaxed text-gray-500 dark:text-gray-400'>
-										Transaction ID: {tx}
+										Transaction ID: {tx?.substring(0, 9)}
 									</p>
 								</Link>
 							</div>
@@ -201,7 +201,7 @@ const NFTDropPage = ({ collection }: Props) => {
 				<header className='flex items-center justify-between'>
 					<Link href={'/'}>
 						<h1 className='w-52 cursor-pointer text-xl font-extralight sm:w-80 '>
-							{'<'} My{' '}
+							◀️ My{' '}
 							<span className='font-extrabold underline decoration-pink-600/50'>
 								Own
 							</span>{' '}

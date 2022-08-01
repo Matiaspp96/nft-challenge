@@ -11,7 +11,7 @@ interface Props {
 
 const Home = ({ collections }: Props) => {
 	return (
-		<div className='max-w-7xl min-h-screen mx-auto flex flex-col px-10 2xl:px-0'>
+		<div className='max-w-7xl min-h-screen mx-auto flex flex-col px-10 2xl:px-0 2xl:justify-between'>
 			<Head>
 				<title>NFT Drops</title>
 				<link rel='icon' href='/favicon.ico' />
@@ -47,7 +47,7 @@ const Home = ({ collections }: Props) => {
 				</div>
 			</main>
 			<footer className='mt-10 border-t-2 border-rose-600/50 py-6 text-center text-sm font-medium uppercase'>
-				Made By <span className='text-cyan-600'>Matias Palomo</span>
+				Made By <Link href={'https://matiasp.vercel.app'}><span className='text-cyan-600 cursor-pointer'>Matias Palomo</span></Link>
 			</footer>
 		</div>
 	);

@@ -72,10 +72,10 @@ const NFTDropPage = ({ collection }: Props) => {
 		const notification = toast.loading('Minting ...', {
 			style: {
 				background: 'white',
-				color: 'green',
+				color: 'rgb(34 197 94, 0.5)',
 				fontWeight: 'bolder',
 				fontSize: '17px',
-				padding: '20px',
+				padding: '17px',
 			},
 		});
 
@@ -89,11 +89,11 @@ const NFTDropPage = ({ collection }: Props) => {
 				toast('Hooray... You Successfully Minted!', {
 					duration: 8000,
 					style: {
-						background: 'green',
+						background: 'rgb(34 197 94, 0.5)',
 						color: 'white',
 						fontWeight: 'bolder',
 						fontSize: '17px',
-						padding: '20px',
+						padding: '17px',
 					},
 				});
 
@@ -108,7 +108,7 @@ const NFTDropPage = ({ collection }: Props) => {
 						color: 'white',
 						fontWeight: 'bolder',
 						fontSize: '17px',
-						padding: '20px',
+						padding: '17px',
 					},
 				});
 			})
